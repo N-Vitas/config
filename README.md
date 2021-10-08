@@ -6,7 +6,7 @@
 
 ## Установка
 ``` 
-go get github.com/N-Vitas/config 
+go get github.com/n-vitas/config 
 ```  
 
 
@@ -15,7 +15,7 @@ go get github.com/N-Vitas/config
 package main
 
 import (
-	"github.com/N-Vitas/config"
+	"github.com/n-vitas/config"
 	"fmt"
 )
 
