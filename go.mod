@@ -1,3 +1,3 @@
-module github.com/n-vitas/config.v2.0.2
+module github.com/n-vitas/config
 
 go 1.16
