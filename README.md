@@ -24,9 +24,9 @@ func main() {
 		config.SetConfigFile("./main.json"),
 		config.UseConfigFile(),
 	)
-	fmt.Printf("%v\n", con.GetBool("auth.ismart"))
-	fmt.Printf("%d\n", con.GetInt64("db.test.port"))
-	fmt.Printf("%v\n", con.GetSlice("auth.maps"))
-	fmt.Printf("%v", con.GetString("go111module"))
+	fmt.Printf("%v\n", con.GetBool("auth.ismart", false))
+	fmt.Printf("%d\n", con.GetInt64("db.test.port", 3306))
+	fmt.Printf("%v\n", con.GetSlice("auth.maps", []string{}))
+	fmt.Printf("%v", con.GetString("go111module", "off"))
 }
 ```
