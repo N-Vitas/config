@@ -70,51 +70,51 @@ func NewWithOptions(opts ...Option) *Config {
 }
 
 // GetString Получение значения конфигурации тип строка
-func GetString(key string) string { return c.GetString(key) }
+func GetString(key string, def interface{}) string { return c.GetString(key, def) }
 
 // GetString Получение значения конфигурации тип строка
-func (v *Config) GetString(key string) string {
-	return ToString(v.Get(key))
+func (v *Config) GetString(key string, def interface{}) string {
+	return ToString(v.Get(key, def))
 }
 
 // GetInt Получение значения конфигурации тип число
-func GetInt(key string) int { return c.GetInt(key) }
+func GetInt(key string, def interface{}) int { return c.GetInt(key, def) }
 
 // GetInt Получение значения конфигурации тип число
-func (v *Config) GetInt(key string) int {
-	return ToInt(v.Get(key))
+func (v *Config) GetInt(key string, def interface{}) int {
+	return ToInt(v.Get(key, def))
 }
 
 // GetInt64 Получение значения конфигурации тип число 64
-func GetInt64(key string) int64 { return c.GetInt64(key) }
+func GetInt64(key string, def interface{}) int64 { return c.GetInt64(key, def) }
 
 // GetInt64 Получение значения конфигурации тип число 64
-func (v *Config) GetInt64(key string) int64 {
-	return ToInt64(v.Get(key))
+func (v *Config) GetInt64(key string, def interface{}) int64 {
+	return ToInt64(v.Get(key, def))
 }
 
 // GetFloat Получение значения конфигурации тип число с плавоющей точкой
-func GetFloat(key string) float64 { return c.GetFloat(key) }
+func GetFloat(key string, def interface{}) float64 { return c.GetFloat(key, def) }
 
 // GetFloat Получение значения конфигурации тип число с плавоющей точкой
-func (v *Config) GetFloat(key string) float64 {
-	return ToFloat(v.Get(key))
+func (v *Config) GetFloat(key string, def interface{}) float64 {
+	return ToFloat(v.Get(key, def))
 }
 
 // GetBool Получение значения конфигурации тип истина или ложь
-func GetBool(key string) bool { return c.GetBool(key) }
+func GetBool(key string, def interface{}) bool { return c.GetBool(key, def) }
 
 // GetBool Получение значения конфигурации тип истина или ложь
-func (v *Config) GetBool(key string) bool {
-	return ToBool(v.Get(key))
+func (v *Config) GetBool(key string, def interface{}) bool {
+	return ToBool(v.Get(key, def))
 }
 
 // GetSlice Получение значения конфигурации тип истина или ложь
-func GetSlice(key string) []string { return c.GetSlice(key) }
+func GetSlice(key string, def interface{}) []string { return c.GetSlice(key, def) }
 
 // GetSlice Получение значения конфигурации тип истина или ложь
-func (v *Config) GetSlice(key string) []string {
-	return ToStringSlice(v.Get(key))
+func (v *Config) GetSlice(key string, def interface{}) []string {
+	return ToStringSlice(v.Get(key, def))
 }
 
 // KeyDelimiter Устанавливает разделитель, используемый для определения частей ключа.
@@ -132,6 +132,11 @@ func (v *Config) SetConfigFile(path string) {
 			v.createFileConf()
 		}
 	}
+}
+
+// SetConfigName Устанавливает путь файла конфигурации.
+func (v *Config) SetConfigName(name string) {
+	v.configName = name
 }
 
 // SetEnvPrefix Устанавливает префикс, который будут использовать переменные ОКРУЖЕНИЯ.
@@ -153,24 +158,24 @@ func (v *Config) UseEventSystem() {
 }
 
 // Get Возвращает значение переменной окружения либо значение по умолчанию
-func (c *Config) GetEnvSystem(key string, def string) string {
+func (c *Config) GetEnvSystem(key string, def interface{}) string {
 	if len(os.Getenv(key)) == 0 {
-		return def
+		return ToString(def)
 	}
 	return os.Getenv(key)
 }
 
 // Get Возвращает интерфейс. Для конкретного знач Get____ methods.
-func Get(key string) interface{} { return c.Get(key) }
+func Get(key string, def string) interface{} { return c.Get(key, def) }
 
 // Get Возвращает интерфейс. Для конкретного знач Get____ methods.
-func (v *Config) Get(key string) (value interface{}) {
+func (v *Config) Get(key string, def interface{}) (value interface{}) {
 	lcaseKey := strings.ToLower(key)
 	path := strings.Split(lcaseKey, v.keyDelim)
 	value = v.searchMap(v.config, path)
 	if value == nil {
 		ucaseKey := strings.ToUpper(key)
-		value = v.GetEnvSystem(ucaseKey, "")
+		value = v.GetEnvSystem(ucaseKey, def)
 	}
 	return value
 }

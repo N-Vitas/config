@@ -14,6 +14,13 @@ func SetConfigFile(in string) Option {
 	})
 }
 
+// SetConfigName Устанавливает путь файла конфигурации.
+func SetConfigName(in string) Option {
+	return optionFunc(func(v *Config) {
+		v.SetConfigName(in)
+	})
+}
+
 // SetEnvPrefix Устанавливает префикс, который будут использовать переменные ОКРУЖЕНИЯ.
 func SetEnvPrefix(in string) Option {
 	return optionFunc(func(v *Config) {

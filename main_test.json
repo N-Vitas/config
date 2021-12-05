@@ -1,0 +1,17 @@
+{
+    "auth": {
+        "ismart": true,
+        "maps":[
+            "guest",
+            "user",
+            "moderator",
+            "admin"
+        ]
+    },
+    "db":{
+        "test":{
+            "host": "localhost",
+            "port": 1443
+        }
+    }
+}
